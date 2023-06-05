@@ -47,7 +47,7 @@ class CouponSpider(Spider):
         coupon_element = response.xpath("//li[contains(text(), 'Coupons')]")
         if coupon_element:
             offer_elements = wait.until(EC.presence_of_all_elements_located((By.XPATH,
-                                                                             "//div[@class='BrandOffers']//span[@class='absolute top-0 left-0 w-[calc(100%_-_56px)]']")))
+                                                                             "//div[@class='BrandOffers']//span[@class='absolute top-0 left-0 w-[calc(100%_-_56px)] lg:w-[calc(100%_-_40px)] bg-cta-500 hover:bg-cta-600 text-left text-white text-md py-2 border-2 border-cta-500 px-4 rounded-md hover:bg-cta-600 focus:outline-none']")))
             coupon_list = []
             i = 0
             while i < len(offer_elements):
@@ -64,7 +64,7 @@ class CouponSpider(Spider):
                     browser.find_element(By.XPATH, "/html/body/div[1]/div[6]/div/div/div[2]/span").click()
                 except StaleElementReferenceException:
                     offer_elements = wait.until(EC.presence_of_all_elements_located((By.XPATH,
-                                                                                     "//div[@class='BrandOffers']//span[@class='absolute top-0 left-0 w-[calc(100%_-_56px)]']")))
+                                                                                     "//div[@class='BrandOffers']//span[@class='absolute top-0 left-0 w-[calc(100%_-_56px)] lg:w-[calc(100%_-_40px)] bg-cta-500 hover:bg-cta-600 text-left text-white text-md py-2 border-2 border-cta-500 px-4 rounded-md hover:bg-cta-600 focus:outline-none']")))
                     if i >= len(offer_elements):
                         break
                     else:
