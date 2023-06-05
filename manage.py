@@ -7,7 +7,6 @@ from flask_migrate import Migrate, MigrateCommand
 from dotenv import load_dotenv
 from app.main import create_app, db
 from app.main.controller.coupon_controller import routes_blueprint
-from crawler.crawler.spiders.crawl_spider import CouponSpider
 
 
 load_dotenv()

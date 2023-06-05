@@ -1,10 +1,11 @@
 from datetime import datetime
-
 from app.main import db
 
 
 class Coupon(db.Model):
-    """ User Model for storing user related details """
+    """
+    Coupon Model for storing coupon related details
+    """
     __tablename__ = "coupon"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

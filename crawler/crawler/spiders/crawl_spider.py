@@ -1,6 +1,4 @@
 import time
-
-from flask import session
 from scrapy import Spider
 from scrapy_selenium import SeleniumRequest
 from selenium.common import StaleElementReferenceException, ElementClickInterceptedException
@@ -9,23 +7,24 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-
 from app.main import db
 from app.main.model.coupon import Coupon
 
 
 class CouponSpider(Spider):
+    """
+    Crawl coupon from website
+    """
     name = 'crawl_coupon'
     myBaseUrl = ''
     start_urls = []
 
-    def __init__(self, category='', **kwargs):
-        self.myBaseUrl = category
+    def __init__(self, web_url='', **kwargs):
+        self.myBaseUrl = web_url
         self.start_urls.append(self.myBaseUrl)
         super().__init__(**kwargs)
 
     def start_requests(self):
-        print('ILODOOOO')
         url = self.myBaseUrl
         yield SeleniumRequest(url=url,
                               callback=self.parse, )
@@ -52,10 +51,10 @@ class CouponSpider(Spider):
             coupon_list = []
             i = 0
             while i < len(offer_elements):
-                detai_coupon = offer_elements[i]
+                detail_coupon = offer_elements[i]
                 try:
-                    browser.execute_script("arguments[0].click();", detai_coupon)
-                    wait.until(EC.staleness_of(detai_coupon))
+                    browser.execute_script("arguments[0].click();", detail_coupon)
+                    wait.until(EC.staleness_of(detail_coupon))
                     handles = browser.window_handles
                     browser.switch_to.window(handles[-1])
                     coupon_locator = (By.XPATH, "/html/body/div[1]/div[6]/div/div/div[2]/div[1]/div/div[2]/div[1]")
