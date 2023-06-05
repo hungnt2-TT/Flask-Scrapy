@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:11
+    container_name: scrapy_postgres_container
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: scrapy_db
+      POSTGRES_USER: scrapy_user
+      POSTGRES_PASSWORD: scrapy_password
+
+  redis:
+    image: redis:5
+    ports:
+      - 6379:6379
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scrapy_web_container
+    ports:
+      - 5000:5000
+    depends_on:
+      - postgres
+#      - redis
+    environment:
+      DATABASE_URL: postgresql://${PG_USER}:${PG_PASSWORD}@postgres/${PG_DATABASE}
+    volumes:
+      - .:/app
+
+networks:
+    default:
+        external:
+          name: scrapy_network
